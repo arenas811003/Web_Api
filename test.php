@@ -41,9 +41,10 @@ class test extends Command
         
         $curl = curl_init();
         $times = 0;
+        
         $Startdata = 0;
     do{    
-       
+        
         curl_setopt_array($curl, array(
             CURLOPT_URL => "http://train.rd6/?start=2019-01-21T10:11:00&end=2019-01-21T10:11:30&from=$Startdata",
             CURLOPT_RETURNTRANSFER => true,
@@ -59,14 +60,16 @@ class test extends Command
 
         $response = curl_exec($curl);
         $response = json_decode($response,true);
-        $Totalnum = $response['hits']['total'];//74423
+        // $Totalnum = $response['hits']['total'];//74423
         $Tenthousand = $response['hits']['hits'];//10000
+        
 
-
-        // print_r($totaldata);
+        // print_r($Tenthousand);
 
         $Array=array();
 
+        $extimes = $times;
+        
         foreach($Tenthousand as $data){
             
             $data = [       
@@ -102,9 +105,9 @@ class test extends Command
         }
         $Startdata = $times-1;
         print_r($Startdata."\n");
+        
+    }while($times != $extimes);
 
-    }while($times<$Totalnum);
-    
         // Data::insert($Array);
         // print_r($Array[0]);
         //  foreach($Array as $array){
